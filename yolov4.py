@@ -53,7 +53,7 @@ def check_type(images_path):
     input_path_extension = images_path.split('.')[-1]
     if input_path_extension in ['jpg', 'jpeg', 'png']:
         return 0
-    elif input_path_extension in ['mp4', 'avi']:
+    elif input_path_extension in ['mp4', 'avi', 'webm']:
         return 1
     else:
         return 2
@@ -89,6 +89,7 @@ def detect_img(input_file, cfg, weights, classfile, thresh, dont_show, obj_infos
     end_drawing = time.time()
     
     fps_label = "FPS: %.2f (excluding drawing time of %.2fms)" % (1 / (end - start), (end_drawing - start_drawing) * 1000)
+    print(fps_label + "\r",end="", flush = True)
     cv2.putText(frame, fps_label, (0, 25), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
     if(not dont_show):
         while cv2.waitKey(1) < 1:
@@ -131,6 +132,8 @@ def detect_video(input_file, cfg, weights, classfile, thresh, dont_show, obj_inf
         end_drawing = time.time()
         
         fps_label = "FPS: %.2f (excluding drawing time of %.2fms)" % (1 / (end - start), (end_drawing - start_drawing) * 1000)
+        print(fps_label + "\r",end="", flush = True)
+        
         cv2.putText(frame, fps_label, (0, 25), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
         if(not dont_show):
             cv2.imshow("video detections", frame)
